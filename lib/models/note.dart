@@ -4,4 +4,10 @@ class Note {
   String note;
 
   Note({this.id, this.title, this.note}) : super();
+
+  Map<String, dynamic> toJson() => {
+    'id' : this.id,
+    'title' : this.title,
+    'note' : this.note,
+  };
 }
