@@ -5,6 +5,9 @@ import 'package:notes/services/shared_preferences.dart';
 
 import 'note_state.dart';
 
+export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:notes/models/note.dart';
+
 class NoteCubit extends Cubit<NoteState> {
   final NoteRepository noteRepository;
 
