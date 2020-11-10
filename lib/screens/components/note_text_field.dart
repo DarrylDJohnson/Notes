@@ -5,8 +5,13 @@ import 'package:notes/themes/app_theme.dart';
 
 class NoteTextField extends StatefulWidget {
   final Note note;
+  final Function onEditingComplete;
 
-  const NoteTextField({Key key, this.note}) : super(key: key);
+  const NoteTextField(
+    this.note, {
+    this.onEditingComplete,
+    Key key,
+  }) : super(key: key);
 
   @override
   _NoteTextFieldState createState() => _NoteTextFieldState();
@@ -28,8 +33,7 @@ class _NoteTextFieldState extends State<NoteTextField> {
       decoration: borderlessInputDecoration
         ..copyWith(hintText: "Type your note here"),
       onChanged: (text) => widget.note.note = text,
-      onEditingComplete: () =>
-          context.bloc<NoteCubit>().updateNote(widget.note),
+      onEditingComplete: () => widget.onEditingComplete,
     );
   }
 }

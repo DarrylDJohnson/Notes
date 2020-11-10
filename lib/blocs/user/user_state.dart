@@ -7,34 +7,34 @@ abstract class UserState extends Equatable {
   UserState([List props = const []]) : super(props);
 }
 
-class Initial extends UserState {
+class UserStateInitial extends UserState {
   @override
   String toString() => 'User initial';
 }
 
-class Loading extends UserState {
+class UserStateLoading extends UserState {
   @override
   String toString() => 'Loading';
 }
 
-class Unauthenticated extends UserState {
+class UserStateUnauthenticated extends UserState {
   @override
   String toString() => 'User unauthenticated';
 }
 
-class Authenticated extends UserState {
+class UserStateAuthenticated extends UserState {
   final User user;
 
-  Authenticated(this.user);
+  UserStateAuthenticated(this.user);
 
   @override
   String toString() => 'Authenticated user {$user}';
 }
 
-class UserError extends UserState {
+class UserStateError extends UserState {
   final String error;
 
-  UserError(this.error) : super([error]);
+  UserStateError(this.error) : super([error]);
 
   @override
   String toString() => 'Error {SignInState: $error }';

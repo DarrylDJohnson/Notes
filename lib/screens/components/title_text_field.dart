@@ -4,10 +4,12 @@ import 'package:notes/themes/app_theme.dart';
 
 class TitleTextField extends StatefulWidget {
   final Note note;
+  final Function onEditingComplete;
 
-  const TitleTextField({
+  const TitleTextField(
+    this.note, {
+    this.onEditingComplete,
     Key key,
-    this.note,
   }) : super(key: key);
 
   @override
@@ -29,8 +31,7 @@ class _TitleTextFieldState extends State<TitleTextField> {
       controller: _controller,
       decoration: borderlessInputDecoration..copyWith(hintText: "Title"),
       onChanged: (text) => widget.note.title = text,
-      onEditingComplete: () =>
-          context.bloc<NoteCubit>().updateNote(widget.note),
+      onEditingComplete: () => widget.onEditingComplete,
     );
   }
 }

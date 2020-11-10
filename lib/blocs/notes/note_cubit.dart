@@ -11,12 +11,12 @@ export 'package:notes/models/note.dart';
 class NoteCubit extends Cubit<NoteState> {
   final NoteRepository noteRepository;
 
-  NoteCubit()
-      : this.noteRepository = NoteRepository(),
+  NoteCubit([NoteRepository noteRepository])
+      : this.noteRepository = noteRepository ?? NoteRepository(),
         super(NoteStateLoading());
 
   /// Navigation ///
-  startApp() async {
+  init() async {
     String id = await getCurrentId();
 
     id == null ? goToList() : goToNote(id);

@@ -3,50 +3,54 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes/blocs/user/user_state.dart';
 import 'package:notes/services/user_repository.dart';
 
+export 'package:flutter_bloc/flutter_bloc.dart';
 export 'user_state.dart';
 
-class UserCubit extends Cubit<UserState> {
-  final UserRepository _userRepository;
 
-  UserCubit(this._userRepository) : super(Initial());
+class UserCubit extends Cubit<UserState> {
+  final UserRepository userRepository;
+
+  UserCubit()
+      : userRepository = UserRepository(),
+        super(UserStateInitial());
 
   Future<void> startApp() async {
-    emit(Initial());
+    emit(UserStateInitial());
 
-    UserStatus userStatus = await _userRepository.getUserStatus();
+    UserStatus userStatus = await userRepository.getUserStatus();
 
     switch (userStatus) {
       case UserStatus.unknown:
-        emit(Unauthenticated());
+        emit(UserStateUnauthenticated());
         break;
       case UserStatus.authenticated:
-        User user = _userRepository.getUser();
-        emit(Authenticated(user));
+        User user = userRepository.getUser();
+        emit(UserStateAuthenticated(user));
         break;
       default:
-        emit(Unauthenticated());
+        emit(UserStateUnauthenticated());
     }
   }
 
   Future<void> signInWithGoogle() async {
-    emit(Loading());
+    emit(UserStateLoading());
 
-    User user = await _userRepository.signInWithGoogle();
+    User user = await userRepository.signInWithGoogle();
 
     user != null
-        ? emit(Authenticated(user))
-        : emit(UserError('Google sign in error'));
+        ? emit(UserStateAuthenticated(user))
+        : emit(UserStateError('Google sign in error'));
   }
 
   Future<void> signOut() async {
-    emit(Loading());
+    emit(UserStateLoading());
 
-    User user = await _userRepository.signOutWithGoogle();
+    User user = await userRepository.signOutWithGoogle();
 
-    user == null ? startApp() : Authenticated(user);
+    user == null ? startApp() : UserStateAuthenticated(user);
   }
 
   User getCurrentUser() {
-    return _userRepository.getUser();
+    return userRepository.getUser();
   }
 }
