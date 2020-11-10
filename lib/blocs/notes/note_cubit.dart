@@ -47,6 +47,11 @@ class NoteCubit extends Cubit<NoteState> {
   goToBottomSheet([Note note]) => emit(NoteStateBottomSheet(note ?? Note()));
 
   /// Actions ///
+
+  updateNote(Note note) async {
+    await noteRepository.pushNote(note);
+  }
+
   pushNote(Note note) async {
     note.id ??= noteRepository.generateNoteId();
 
