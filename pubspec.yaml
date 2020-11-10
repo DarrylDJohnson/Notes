@@ -37,7 +37,7 @@ dependencies:
   equatable: ^0.2.0
   meta: ^1.1.6
 
-
+  shared_preferences: ^0.5.12
 
 dev_dependencies:
   flutter_test:
