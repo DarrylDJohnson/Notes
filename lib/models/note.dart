@@ -3,7 +3,11 @@ class Note {
   String title;
   String note;
 
-  Note({this.id, this.title, this.note}) : super();
+  Note({
+    this.id,
+    this.title,
+    this.note,
+  }) : super();
 
   Note.fromJson(Map map)
       : this.id = map['id'],

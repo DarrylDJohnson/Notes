@@ -16,6 +16,7 @@ class _UserProviderState extends State<UserProvider> {
   @override
   void initState() {
     userCubit = UserCubit();
+    userCubit.startApp();
     super.initState();
   }
 

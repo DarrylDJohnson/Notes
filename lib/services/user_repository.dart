@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +15,7 @@ class UserRepository {
     ).signIn();
 
     final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,

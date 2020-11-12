@@ -26,25 +26,29 @@ class NoteRepository {
     yield* notesReference.onValue.transform(
       StreamTransformer.fromHandlers(
         handleData: (data, sink) {
-          if(data?.snapshot?.value != null){
-            List<Note> notes = [];
+          List<Note> notes = [];
 
+          if (data?.snapshot?.value != null) {
             Map map = data.snapshot.value;
 
             map.values.forEach((element) => notes.add(Note.fromJson(element)));
-
-            sink.add(notes);
           }
+          sink.add(notes);
         },
       ),
     );
   }
 
   Stream<Note> streamNote(String id) async* {
-    yield* notesReference.child(id).onValue.transform(StreamTransformer.fromHandlers(handleData: (data, sink){
-      if(data?.snapshot?.value != null){
-        sink.add(Note.fromJson(data.snapshot.value));
-      }
-    },));
+    yield* notesReference
+        .child(id)
+        .onValue
+        .transform(StreamTransformer.fromHandlers(
+      handleData: (data, sink) {
+        if (data?.snapshot?.value != null) {
+          sink.add(Note.fromJson(data.snapshot.value));
+        }
+      },
+    ));
   }
 }

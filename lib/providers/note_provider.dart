@@ -4,10 +4,9 @@ import 'package:notes/blocs/notes/note_cubit.dart';
 import 'package:notes/blocs/notes/note_state.dart';
 import 'package:notes/screens/components/note_bottom_sheet.dart';
 import 'package:notes/screens/empty/empty_screen.dart';
-import 'package:notes/screens/list/list_sreen.dart';
+import 'package:notes/screens/list/list_screen.dart';
 import 'package:notes/screens/loading/loading_screen.dart';
 import 'package:notes/screens/note/note_screen.dart';
-import 'package:notes/services/note_repository.dart';
 
 class NoteProvider extends StatefulWidget {
   final User user;
@@ -26,9 +25,7 @@ class _NoteProviderState extends State<NoteProvider> {
 
   @override
   void initState() {
-    noteCubit = NoteCubit(
-      NoteRepository(widget.user),
-    );
+    noteCubit = NoteCubit();
     noteCubit.init();
     super.initState();
   }
@@ -50,11 +47,18 @@ class _NoteProviderState extends State<NoteProvider> {
             showNoteBottomSheet(context, state.note);
           }
         },
+        buildWhen: (previous, current) {
+          if (current is NoteStateBottomSheet || current is NoteStateError) {
+            return false;
+          } else {
+            return true;
+          }
+        },
         builder: (context, state) {
-          if (state is NoteStateEmpty) {
-            return EmptyScreen();
-          } else if (state is NoteStateLoading) {
+          if (state is NoteStateLoading) {
             return LoadingScreen();
+          } else if (state is NoteStateEmpty) {
+            return EmptyScreen();
           } else if (state is NoteStateNote) {
             return NoteScreen();
           } else {

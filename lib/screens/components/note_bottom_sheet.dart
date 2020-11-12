@@ -1,33 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:notes/blocs/notes/note_cubit.dart';
 import 'package:notes/models/note.dart';
-
-import 'file:///C:/Users/Darry/AndroidStudioProjects/notes/lib/screens/components/title_text_field.dart';
+import 'package:notes/screens/components/title_text_field.dart';
+import 'package:notes/themes/app_theme.dart';
 
 showNoteBottomSheet(BuildContext context, Note note) {
   showModalBottomSheet(
     context: context,
-    builder: (_) => NoteBottomSheet(),
+    shape: modalBottomSheetShape,
+    builder: (_) =>
+        NoteBottomSheet(note: note, cubit: context.bloc<NoteCubit>()),
   );
 }
 
 class NoteBottomSheet extends StatelessWidget {
   final Note note;
+  final NoteCubit cubit;
 
-  const NoteBottomSheet({Key key, this.note}) : super(key: key);
+  const NoteBottomSheet({
+    Key key,
+    this.note,
+    this.cubit,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
+    return Column(
+
       children: [
-        TitleTextField(note),
+        /*
+        ListTile(
+          title: TitleTextField(note),
+        ),
         ListTile(
           title: FlatButton(
             child: Text('create note'),
-            onPressed: () => context.bloc<NoteCubit>().updateNote(note),
+            onPressed: () => cubit.updateNote(note),
           ),
         ),
+
+         */
       ],
     );
   }

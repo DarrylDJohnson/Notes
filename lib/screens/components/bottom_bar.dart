@@ -7,17 +7,32 @@ import 'menu.dart';
 class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(MdiIcons.menu),
-          onPressed: () => menu(context),
+    return  Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10.0,
+          ),
+        ],
+      ),
+      child: BottomAppBar(
+        clipBehavior: Clip.hardEdge,
+
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(MdiIcons.menu),
+              onPressed: () => menu(context),
+            ),
+            IconButton(
+              icon: Icon(MdiIcons.dotsVertical),
+              onPressed: () => settings(context),
+            ),
+          ],
         ),
-        IconButton(
-          icon: Icon(MdiIcons.dotsVertical),
-          onPressed: () => settings(context),
-        ),
-      ],
+      ),
     );
   }
 }

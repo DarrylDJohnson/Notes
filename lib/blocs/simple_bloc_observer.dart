@@ -5,14 +5,15 @@ import 'notes/note_state.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override
-  void onEvent(Bloc bloc, Object event) {
+  void onEvent(Cubit cubit, Object event) {
     print(event);
-    super.onEvent(bloc, event);
+    super.onEvent(cubit, event);
   }
 
   @override
   void onChange(Cubit cubit, Change change) async {
 
+    print(change);
     if (change.nextState is NoteStateNote) {
       setCurrentId(change.nextState.id);
     } else if (change.nextState is NoteStateList){

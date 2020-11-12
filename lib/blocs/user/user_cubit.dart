@@ -10,8 +10,8 @@ export 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   final UserRepository userRepository;
 
-  UserCubit()
-      : userRepository = UserRepository(),
+  UserCubit([UserRepository userRepository])
+      : this.userRepository = userRepository ?? UserRepository(),
         super(UserStateInitial());
 
   Future<void> startApp() async {
