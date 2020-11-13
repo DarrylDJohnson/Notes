@@ -8,8 +8,14 @@ showNoteBottomSheet(BuildContext context, Note note) {
   showModalBottomSheet(
     context: context,
     shape: modalBottomSheetShape,
-    builder: (_) =>
-        NoteBottomSheet(note: note, cubit: context.bloc<NoteCubit>()),
+    builder: (_) => Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: NoteBottomSheet(
+        note: note,
+        cubit: context.bloc<NoteCubit>(),
+      ),
+    ),
   );
 }
 
@@ -25,21 +31,51 @@ class NoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-
+    return Stack(
       children: [
-        /*
-        ListTile(
-          title: TitleTextField(note),
+        ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 16.0),
+            ),
+            ListTile(
+              leading: Icon(null),
+              title: TitleTextField(note),
+            ),
+            Divider(
+              thickness: 1.5,
+              color: Colors.blue.withOpacity(0.4),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FlatButton(
+                  textColor: Colors.black54,
+                  child: Text("Cancel"),
+                  onPressed: () => Navigator.of(context).pop(this),
+                ),
+                FlatButton(
+                  textColor: Theme.of(context).accentColor,
+                  child: Text("Done"),
+                  onPressed: () {
+                    cubit.pushNote(note);
+                    Navigator.of(context).pop(this);
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
-        ListTile(
-          title: FlatButton(
-            child: Text('create note'),
-            onPressed: () => cubit.updateNote(note),
+        Positioned(
+          left: 56.0,
+          height: 1000,
+          child: VerticalDivider(
+            thickness: 1.5,
+            width: 1.5,
+            color: Colors.red,
           ),
         ),
-
-         */
       ],
     );
   }

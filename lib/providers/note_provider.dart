@@ -60,9 +60,9 @@ class _NoteProviderState extends State<NoteProvider> {
           } else if (state is NoteStateEmpty) {
             return EmptyScreen();
           } else if (state is NoteStateNote) {
-            return NoteScreen();
+            return NoteScreen(note: state.note,);
           } else {
-            return ListScreen();
+            return ListScreen(notes: state.notes,);
           }
         },
       ),

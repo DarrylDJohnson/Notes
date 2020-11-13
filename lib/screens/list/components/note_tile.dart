@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:notes/blocs/notes/note_cubit.dart';
 
 class NoteTile extends StatelessWidget {
@@ -8,14 +9,18 @@ class NoteTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(note.title),
-      subtitle: Text(
-        note.note,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        title: Text(note.title ?? '', style: Theme.of(context).textTheme.headline5,),
+        subtitle: Text(
+          note.note ?? 'Empty',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        trailing: Icon(MdiIcons.chevronRight),
+        onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
       ),
-      onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
     );
   }
 }

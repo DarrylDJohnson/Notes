@@ -31,7 +31,8 @@ class _NoteTextFieldState extends State<NoteTextField> {
     return TextField(
       controller: _controller,
       decoration: borderlessInputDecoration
-        ..copyWith(hintText: "Type your note here"),
+        .copyWith(hintText: "Take notes here"),
+      maxLines: null,
       onChanged: (text) => widget.note.note = text,
       onEditingComplete: () => widget.onEditingComplete,
     );

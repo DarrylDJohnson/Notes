@@ -29,7 +29,8 @@ class _TitleTextFieldState extends State<TitleTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
-      decoration: borderlessInputDecoration..copyWith(hintText: "Title"),
+      decoration: borderlessInputDecoration.copyWith(hintText: "Title"),
+      style: Theme.of(context).textTheme.headline5,
       onChanged: (text) => widget.note.title = text,
       onEditingComplete: () => widget.onEditingComplete,
     );

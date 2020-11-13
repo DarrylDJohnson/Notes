@@ -15,7 +15,7 @@ class SimpleBlocObserver extends BlocObserver {
 
     print(change);
     if (change.nextState is NoteStateNote) {
-      setCurrentId(change.nextState.id);
+      setCurrentId(change.nextState.note.id);
     } else if (change.nextState is NoteStateList){
       setCurrentId(null);
     }
