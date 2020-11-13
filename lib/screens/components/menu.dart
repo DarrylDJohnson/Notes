@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:notes/blocs/notes/note_cubit.dart';
 import 'package:notes/blocs/user/user_cubit.dart';
+import 'package:notes/screens/components/user_expansion_tile.dart';
 import 'package:notes/themes/app_theme.dart';
 
 menu(BuildContext context) {
@@ -28,7 +30,29 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
-      children: [],
+      children: [
+        UserExpansionTile(userCubit: userCubit,),
+        ListTile(
+          leading: Icon(MdiIcons.bookOpenPageVariantOutline),
+          title: Text("Notes"),
+          onTap: () {
+            noteCubit.goToList();
+            Navigator.of(context).pop(this);
+          },
+        ),
+        ListTile(
+          leading: Icon(MdiIcons.plus),
+          title: Text("Make a new note"),
+          onTap: () {
+            noteCubit.goToBottomSheet();
+            Navigator.of(context).pop(this);
+          },
+        ),
+        ListTile(
+          leading: Icon(MdiIcons.help),
+          title: Text("Help & feedback"),
+        ),
+      ],
     );
   }
 }

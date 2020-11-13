@@ -8,7 +8,6 @@ class CreateFloatingActionButton extends StatelessWidget {
     return FloatingActionButton.extended(
       icon: Icon(MdiIcons.pencilOutline),
       label: Text("Make a note"),
-      backgroundColor: Colors.amberAccent,
       onPressed: () => context.bloc<NoteCubit>().goToBottomSheet(),
     );
   }
