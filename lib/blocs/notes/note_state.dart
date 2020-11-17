@@ -12,11 +12,6 @@ class NoteStateLoading extends NoteState {
   String toString() => 'Loading';
 }
 
-class NoteStateEmpty extends NoteState {
-  @override
-  String toString() => 'Empty';
-}
-
 class NoteStateNote extends NoteState {
   final Note note;
 

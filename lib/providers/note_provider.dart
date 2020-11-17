@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:notes/blocs/notes/note_cubit.dart';
 import 'package:notes/blocs/notes/note_state.dart';
 import 'package:notes/screens/components/note_bottom_sheet.dart';
-import 'package:notes/screens/empty/empty_screen.dart';
 import 'package:notes/screens/list/list_screen.dart';
 import 'package:notes/screens/loading/loading_screen.dart';
 import 'package:notes/screens/note/note_screen.dart';
@@ -57,12 +56,14 @@ class _NoteProviderState extends State<NoteProvider> {
         builder: (context, state) {
           if (state is NoteStateLoading) {
             return LoadingScreen();
-          } else if (state is NoteStateEmpty) {
-            return EmptyScreen();
           } else if (state is NoteStateNote) {
-            return NoteScreen(note: state.note,);
+            return NoteScreen(
+              note: state.note,
+            );
           } else {
-            return ListScreen(notes: state.notes,);
+            return ListScreen(
+              notes: state.notes,
+            );
           }
         },
       ),

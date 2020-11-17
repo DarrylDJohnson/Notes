@@ -10,16 +10,23 @@ class NoteTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        title: Text(note.title ?? '', style: Theme.of(context).textTheme.headline5,),
-        subtitle: Text(
-          note.note ?? 'Empty',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Material(
+        color: Colors.white,
+        elevation: 4.0,
+        child: ListTile(
+          title: Text(
+            note.title.toUpperCase() ?? '',
+            style: TextStyle(),
+          ),
+          subtitle: Text(
+            note.note ?? 'Empty',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: Icon(MdiIcons.chevronRight),
+          onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
         ),
-        trailing: Icon(MdiIcons.chevronRight),
-        onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
       ),
     );
   }

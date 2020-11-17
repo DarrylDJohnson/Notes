@@ -7,7 +7,7 @@ import 'package:notes/themes/app_theme.dart';
 noteSettings(BuildContext context, Note note) {
   showModalBottomSheet(
     context: context,
-    shape: modalBottomSheetShape,
+    shape: roundedTopShape,
     builder: (_) => Settings(
         userCubit: context.bloc<UserCubit>(),
         noteCubit: context.bloc<NoteCubit>(),

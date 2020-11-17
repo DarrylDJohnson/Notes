@@ -17,17 +17,13 @@ class NoteCubit extends Cubit<NoteState> {
 
   /// Navigation ///
   init() async {
-    emit(NoteStateLoading());
 
     String id = await getCurrentId();
-
     id == null ? goToList() : goToNote(id);
   }
 
   goToNote([String id]) async {
     try {
-      emit(NoteStateLoading());
-
       noteRepository.streamNote(id).listen(
             (event) => event == null
                 ? emit(NoteStateLoading())
@@ -40,10 +36,8 @@ class NoteCubit extends Cubit<NoteState> {
 
   goToList() async {
     try {
-      emit(NoteStateLoading());
-
       noteRepository.streamNotes().listen((event) {
-        event.isEmpty ? emit(NoteStateEmpty()) : emit(NoteStateList(event));
+        emit(NoteStateList(event));
       });
     } catch (e) {
       emit(NoteStateError(e));

@@ -8,7 +8,7 @@ import 'package:notes/themes/app_theme.dart';
 menu(BuildContext context) {
   showModalBottomSheet(
     context: context,
-    shape: modalBottomSheetShape,
+    shape: roundedTopShape,
     builder: (_) => Menu(
       userCubit: context.bloc<UserCubit>(),
       noteCubit: context.bloc<NoteCubit>(),

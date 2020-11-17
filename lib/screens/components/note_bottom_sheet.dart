@@ -7,7 +7,7 @@ import 'package:notes/themes/app_theme.dart';
 showNoteBottomSheet(BuildContext context, Note note) {
   showModalBottomSheet(
     context: context,
-    shape: modalBottomSheetShape,
+    shape: roundedTopShape,
     builder: (_) => Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -31,50 +31,32 @@ class NoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return ListView(
+      shrinkWrap: true,
       children: [
-        ListView(
-          shrinkWrap: true,
+        Padding(
+          padding: EdgeInsets.only(top: 16.0),
+        ),
+        ListTile(
+          title: TitleTextField(note),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 16.0),
+            FlatButton(
+              textColor: Colors.black45,
+              child: Text("Cancel"),
+              onPressed: () => Navigator.of(context).pop(this),
             ),
-            ListTile(
-              leading: Icon(null),
-              title: TitleTextField(note),
-            ),
-            Divider(
-              thickness: 1.5,
-              color: Colors.blue.withOpacity(0.4),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FlatButton(
-                  textColor: Colors.black54,
-                  child: Text("Cancel"),
-                  onPressed: () => Navigator.of(context).pop(this),
-                ),
-                FlatButton(
-                  textColor: Theme.of(context).accentColor,
-                  child: Text("Done"),
-                  onPressed: () {
-                    cubit.pushNote(note);
-                    Navigator.of(context).pop(this);
-                  },
-                ),
-              ],
+            FlatButton(
+              textColor: Colors.black,
+              child: Text("Done"),
+              onPressed: () {
+                cubit.pushNote(note);
+                Navigator.of(context).pop(this);
+              },
             ),
           ],
-        ),
-        Positioned(
-          left: 56.0,
-          height: 1000,
-          child: VerticalDivider(
-            thickness: 1.5,
-            width: 1.5,
-            color: Colors.red,
-          ),
         ),
       ],
     );

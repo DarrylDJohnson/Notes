@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notes/blocs/notes/note_cubit.dart';
 import 'package:notes/themes/app_theme.dart';
 
@@ -29,10 +30,23 @@ class _TitleTextFieldState extends State<TitleTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
+      inputFormatters: [
+        UpperCaseTextFormatter(),
+      ],
+      style: TextStyle(fontWeight: FontWeight.bold),
       decoration: borderlessInputDecoration.copyWith(hintText: "Title"),
-      style: Theme.of(context).textTheme.headline5,
       onChanged: (text) => widget.note.title = text,
       onEditingComplete: () => widget.onEditingComplete,
+    );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text?.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }
