@@ -42,13 +42,11 @@ class NoteTile extends StatelessWidget {
         trailing: Icon(MdiIcons.chevronRight),
         onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
       ),
-      background: Material(
-        color: Colors.grey.shade900,
-        child: ListTile(
-          trailing: Icon(
-            MdiIcons.trashCanOutline,
-            color: Colors.white,
-          ),
+      background: ListTile(
+        tileColor: Colors.grey.shade900,
+        trailing: Icon(
+          MdiIcons.trashCanOutline,
+          color: Colors.white,
         ),
       ),
     );

@@ -17,6 +17,10 @@ class NoteRepository {
   String generateNoteId() => notesReference.push().key;
 
   pushNote(Note note) {
+
+    note.createdTime??= DateTime.now();
+    note.updatedTime = DateTime.now();
+
     notesReference.child(note.id).set(note.toJson());
   }
 
@@ -33,6 +37,11 @@ class NoteRepository {
 
             map.values.forEach((element) => notes.add(Note.fromJson(element)));
           }
+
+
+
+          notes.sort((a, b) => a.createdTime.compareTo(b.createdTime));
+
           sink.add(notes);
         },
       ),

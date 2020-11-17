@@ -15,3 +15,7 @@ setSharedPreference(String key, String value) async {
 Future<String> getCurrentId() => getSharedPreferences(CURRENT_ID);
 
 setCurrentId(String id) => setSharedPreference(CURRENT_ID, id);
+
+Future<String> getSortBy() => getSharedPreferences(CURRENT_ID);
+
+setSortBy(String id) => setSharedPreference(CURRENT_ID, id);
