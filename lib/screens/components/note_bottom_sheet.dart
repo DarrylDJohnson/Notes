@@ -53,6 +53,7 @@ class NoteBottomSheet extends StatelessWidget {
               child: Text("Done"),
               onPressed: () {
                 cubit.pushNote(note);
+                cubit.goToNote(note.id);
                 Navigator.of(context).pop(this);
               },
             ),

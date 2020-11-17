@@ -13,7 +13,6 @@ class UserExpansionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User currentUser = userCubit.getCurrentUser();
-
     return Theme(
       data: Theme.of(context).copyWith(
         dividerColor: Colors.transparent,

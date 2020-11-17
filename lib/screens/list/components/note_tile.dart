@@ -9,23 +9,46 @@ class NoteTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Material(
-        color: Colors.white,
-        elevation: 4.0,
+    return Dismissible(
+      key: Key(note.id),
+      confirmDismiss: (direction) async {
+        SnackBarClosedReason reason = await Scaffold.of(context)
+            .showSnackBar(
+              SnackBar(
+                content: Text("Deleted ${note.title}"),
+                action: SnackBarAction(
+                  label: "Undo",
+                  onPressed: () {},
+                ),
+              ),
+            )
+            .closed
+            .then((value) => value);
+
+        return reason != SnackBarClosedReason.action;
+      },
+      onDismissed: (direction) {
+        context.bloc<NoteCubit>().deleteNote(note);
+      },
+      child: ListTile(
+        title: Text(note.title?.toUpperCase() ?? ''),
+        subtitle: note.note == null
+            ? null
+            : Text(
+                note.note,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+        trailing: Icon(MdiIcons.chevronRight),
+        onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
+      ),
+      background: Material(
+        color: Colors.grey.shade900,
         child: ListTile(
-          title: Text(
-            note.title.toUpperCase() ?? '',
-            style: TextStyle(),
+          trailing: Icon(
+            MdiIcons.trashCanOutline,
+            color: Colors.white,
           ),
-          subtitle: Text(
-            note.note ?? 'Empty',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: Icon(MdiIcons.chevronRight),
-          onTap: () => context.bloc<NoteCubit>().goToNote(note.id),
         ),
       ),
     );
