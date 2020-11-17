@@ -31,7 +31,7 @@ class NoteTile extends StatelessWidget {
         context.bloc<NoteCubit>().deleteNote(note);
       },
       child: ListTile(
-        title: Text(note.title?.toUpperCase() ?? ''),
+        title: Text(note.title ?? ''),
         subtitle: note.note == null
             ? null
             : Text(

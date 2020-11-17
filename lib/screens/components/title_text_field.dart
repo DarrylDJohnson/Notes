@@ -30,23 +30,10 @@ class _TitleTextFieldState extends State<TitleTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
-      inputFormatters: [
-        UpperCaseTextFormatter(),
-      ],
       style: TextStyle(fontWeight: FontWeight.bold),
       decoration: borderlessInputDecoration.copyWith(hintText: "Title"),
       onChanged: (text) => widget.note.title = text,
       onEditingComplete: () => widget.onEditingComplete,
-    );
-  }
-}
-
-class UpperCaseTextFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    return TextEditingValue(
-      text: newValue.text?.toUpperCase(),
-      selection: newValue.selection,
     );
   }
 }
