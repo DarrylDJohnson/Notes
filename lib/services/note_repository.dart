@@ -18,8 +18,8 @@ class NoteRepository {
 
   pushNote(Note note) {
 
-    note.createdTime??= DateTime.now();
-    note.updatedTime = DateTime.now();
+    note.timeCreated??= DateTime.now();
+    note.timeLastUpdated = DateTime.now();
 
     notesReference.child(note.id).set(note.toJson());
   }
@@ -40,7 +40,7 @@ class NoteRepository {
 
 
 
-          notes.sort((a, b) => a.createdTime.compareTo(b.createdTime));
+          notes.sort((a, b) => a.timeCreated.compareTo(b.timeCreated));
 
           sink.add(notes);
         },

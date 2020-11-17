@@ -1,6 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'sort_by_enum.dart';
+
 const String CURRENT_ID = 'current_note_id';
+const String SORT_BY = 'sort_by';
 
 Future<String> getSharedPreferences(String key) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -16,6 +19,6 @@ Future<String> getCurrentId() => getSharedPreferences(CURRENT_ID);
 
 setCurrentId(String id) => setSharedPreference(CURRENT_ID, id);
 
-Future<String> getSortBy() => getSharedPreferences(CURRENT_ID);
+Future<SortBy> getSortBy() async => (await getSharedPreferences(SORT_BY)).toSortBy();
 
-setSortBy(String id) => setSharedPreference(CURRENT_ID, id);
+setSortBy(SortBy sortBy) => setSharedPreference(SORT_BY, sortBy.toString());
