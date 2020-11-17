@@ -17,8 +17,7 @@ class NoteRepository {
   String generateNoteId() => notesReference.push().key;
 
   pushNote(Note note) {
-
-    note.timeCreated??= DateTime.now();
+    note.timeCreated ??= DateTime.now();
     note.timeLastUpdated = DateTime.now();
 
     notesReference.child(note.id).set(note.toJson());
@@ -29,7 +28,7 @@ class NoteRepository {
   Stream<List<Note>> streamNotes() async* {
     yield* notesReference.onValue.transform(
       StreamTransformer.fromHandlers(
-        handleData: (data, sink) {
+        handleData: (data, sink) async {
           List<Note> notes = [];
 
           if (data?.snapshot?.value != null) {
@@ -37,10 +36,6 @@ class NoteRepository {
 
             map.values.forEach((element) => notes.add(Note.fromJson(element)));
           }
-
-
-
-          notes.sort((a, b) => a.timeCreated.compareTo(b.timeCreated));
 
           sink.add(notes);
         },

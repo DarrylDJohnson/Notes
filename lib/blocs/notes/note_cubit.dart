@@ -63,4 +63,6 @@ class NoteCubit extends Cubit<NoteState> {
     await noteRepository.deleteNote(note);
     goToList();
   }
+
+
 }
