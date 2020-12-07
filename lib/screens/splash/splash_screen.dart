@@ -24,9 +24,9 @@ class SplashScreen extends StatelessWidget {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: Theme.of(context).textTheme.headline3.copyWith(
-                    color: Colors.black87,
-                  ),
+                  style: Theme.of(context).textTheme.headline3?.copyWith(
+                        color: Colors.black87,
+                      ),
                   children: [
                     TextSpan(
                       text: " Dabble",

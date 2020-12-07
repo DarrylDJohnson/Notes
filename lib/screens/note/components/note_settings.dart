@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:notes/blocs/notes/note_cubit.dart';
-import 'package:notes/blocs/user/user_cubit.dart';
+import 'package:notes/cubits/navigation/navigation_cubit.dart';
+import 'package:notes/cubits/note/note_cubit.dart';
 import 'package:notes/themes/app_theme.dart';
 
-noteSettings(BuildContext context, Note note) {
+noteSettings(BuildContext context) {
   showModalBottomSheet(
     context: context,
     shape: roundedTopShape,
     builder: (_) => Settings(
-        userCubit: context.bloc<UserCubit>(),
-        noteCubit: context.bloc<NoteCubit>(),
-        note: note),
+      context.bloc<NoteCubit>(),
+      context.bloc<NavigationCubit>(),
+    ),
   );
 }
 
 class Settings extends StatelessWidget {
-  final UserCubit userCubit;
   final NoteCubit noteCubit;
-  final Note note;
+  final NavigationCubit navigationCubit;
 
-  const Settings({
-    Key key,
-    this.userCubit,
-    this.noteCubit,
-    this.note,
-  }) : super(key: key);
+  const Settings(this.noteCubit, this.navigationCubit);
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +38,10 @@ class Settings extends StatelessWidget {
             MdiIcons.undo,
             color: Colors.black,
           ),
-          title: Text("Undo all changes"),
+          title: Text("Undo changes"),
           onTap: () {
-            noteCubit.goToNote(note.id);
-            Navigator.of(context).pop(this);
+            navigationCubit.goToNotebook(noteCubit.notebook);
+            Navigator.pop(context);
           },
         ),
         ListTile(
@@ -57,8 +51,9 @@ class Settings extends StatelessWidget {
           ),
           title: Text("Delete note"),
           onTap: () {
-            noteCubit.deleteNote(note);
-            Navigator.of(context).pop(this);
+            noteCubit.deleteNote();
+            navigationCubit.goToNotebook(noteCubit.notebook);
+            Navigator.pop(context);
           },
         ),
       ],

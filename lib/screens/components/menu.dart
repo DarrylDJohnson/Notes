@@ -1,57 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:notes/blocs/notes/note_cubit.dart';
-import 'package:notes/blocs/user/user_cubit.dart';
+import 'package:notes/cubits/navigation/navigation_cubit.dart';
+import 'package:notes/cubits/notebook/notebook_cubit.dart';
+import 'package:notes/cubits/user/user_cubit.dart';
 import 'package:notes/screens/components/user_expansion_tile.dart';
 import 'package:notes/themes/app_theme.dart';
 
 menu(BuildContext context) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     shape: roundedTopShape,
     builder: (_) => Menu(
       userCubit: context.bloc<UserCubit>(),
-      noteCubit: context.bloc<NoteCubit>(),
+      navigationCubit: context.bloc<NavigationCubit>(),
     ),
   );
 }
 
 class Menu extends StatelessWidget {
   final UserCubit userCubit;
-  final NoteCubit noteCubit;
+  final NavigationCubit navigationCubit;
 
   const Menu({
-    Key key,
-    @required this.userCubit,
-    @required this.noteCubit,
-  }) : super(key: key);
+    this.userCubit,
+    this.navigationCubit,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       children: [
-        UserExpansionTile(userCubit: userCubit,),
+        UserExpansionTile(userCubit),
         ListTile(
-          leading: Icon(MdiIcons.bookOpenPageVariantOutline),
-          title: Text("Notes"),
+          leading: Icon(MdiIcons.homeOutline),
+          title: Text("Home"),
           onTap: () {
-            noteCubit.goToList();
-            Navigator.of(context).pop(this);
+            navigationCubit.goToHome();
+            Navigator.pop(context);
           },
         ),
+        Divider(color: Colors.black45),
         ListTile(
           leading: Icon(MdiIcons.plus),
-          title: Text("Make a new note"),
+          title: Text("New notebook"),
           onTap: () {
-            noteCubit.goToBottomSheet();
-            Navigator.of(context).pop(this);
+            navigationCubit.goToCreateNotebook();
+            Navigator.pop(context);
           },
         ),
-        ListTile(
-          leading: Icon(MdiIcons.help),
-          title: Text("Help & feedback"),
-        ),
+        Divider(color: Colors.black45),
       ],
     );
   }

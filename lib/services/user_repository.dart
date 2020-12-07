@@ -6,14 +6,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 enum UserStatus { authenticated, unauthenticated, unknown }
 
 class UserRepository {
-  Future<User> signInWithGoogle() async {
-    final GoogleSignInAccount googleSignInAccount = await GoogleSignIn(
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
-      ],
-    ).signIn();
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 
+  signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+
+    googleSignInAccount.clearAuthCache();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
 
@@ -22,34 +25,14 @@ class UserRepository {
       idToken: googleSignInAuthentication.idToken,
     );
 
-    await FirebaseAuth.instance.signInWithCredential(credential);
-
-    return FirebaseAuth.instance.currentUser;
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  Future<User> signOutWithGoogle() async {
+  signOutWithGoogle() async {
+    await googleSignIn.signOut();
     await FirebaseAuth.instance.signOut();
-
-    return FirebaseAuth.instance.currentUser;
   }
 
-  Future<bool> isSignedIn() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-
-    print("UserRepository: $currentUser");
-
-    return currentUser != null;
-  }
-
-  User getUser() {
-    return FirebaseAuth.instance.currentUser;
-  }
-
-  Future<UserStatus> getUserStatus() async {
-    if (FirebaseAuth.instance.currentUser == null) {
-      return UserStatus.unknown;
-    } else {
-      return UserStatus.authenticated;
-    }
-  }
+  Stream<User> streamUserState() => FirebaseAuth.instance.authStateChanges();
 }

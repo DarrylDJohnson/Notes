@@ -1,72 +1,41 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/blocs/notes/note_cubit.dart';
-import 'package:notes/blocs/notes/note_state.dart';
-import 'package:notes/screens/components/note_bottom_sheet.dart';
-import 'package:notes/screens/list/list_screen.dart';
-import 'package:notes/screens/loading/loading_screen.dart';
+import 'package:notes/cubits/note/note_cubit.dart';
+import 'package:notes/models/notebook.dart';
 import 'package:notes/screens/note/note_screen.dart';
 
 class NoteProvider extends StatefulWidget {
-  final User user;
+  final Notebook notebook;
+  final Note note;
 
-  const NoteProvider(
-    this.user, {
-    Key key,
-  }) : super(key: key);
+  const NoteProvider(this.notebook, this.note);
 
   @override
-  _NoteProviderState createState() => _NoteProviderState();
+  _NoteProviderState createState() {
+    return _NoteProviderState();
+  }
 }
 
 class _NoteProviderState extends State<NoteProvider> {
-  NoteCubit noteCubit;
+  NoteCubit cubit;
 
   @override
-  void initState() {
-    noteCubit = NoteCubit();
-    noteCubit.init();
-    super.initState();
+  void didChangeDependencies() {
+    cubit = NoteCubit(widget.notebook, widget.note);
+    cubit.init();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    cubit.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => noteCubit,
-      child: BlocConsumer(
-        cubit: noteCubit,
-        listener: (context, state) {
-          if (state is NoteStateError) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Note error: ${state.error}"),
-              ),
-            );
-          } else if (state is NoteStateBottomSheet) {
-            showNoteBottomSheet(context, state.note);
-          }
-        },
-        buildWhen: (previous, current) {
-          if (current is NoteStateBottomSheet || current is NoteStateError) {
-            return false;
-          } else {
-            return true;
-          }
-        },
-        builder: (context, state) {
-          if (state is NoteStateLoading) {
-            return LoadingScreen();
-          } else if (state is NoteStateNote) {
-            return NoteScreen(
-              note: state.note,
-            );
-          } else {
-            return ListScreen(
-              notes: state.notes,
-            );
-          }
-        },
-      ),
+      create: (_) => cubit,
+      child: NoteScreen(cubit.note),
     );
   }
 }

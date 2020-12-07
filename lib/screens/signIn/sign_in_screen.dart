@@ -26,7 +26,7 @@ class SignInScreen extends StatelessWidget {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: Theme.of(context).textTheme.headline3.copyWith(
+                  style: Theme.of(context).textTheme.headline3?.copyWith(
                         color: Colors.black87,
                       ),
                   children: [

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:notes/screens/components/settings.dart';
 
 import 'menu.dart';
 
 class BottomBar extends StatelessWidget {
+  final Function showSettings;
+  final Function showMenu;
+
+  const BottomBar({
+    this.showSettings,
+    this.showMenu,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,14 +29,15 @@ class BottomBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              color: Colors.black,
               icon: Icon(MdiIcons.menu),
               onPressed: () => menu(context),
             ),
-            IconButton(
-              color: Colors.black,
-              icon: Icon(MdiIcons.dotsVertical),
-              onPressed: () => settings(context),
+            Visibility(
+              visible: showSettings != null,
+              child: IconButton(
+                icon: Icon(MdiIcons.dotsVertical),
+                onPressed: () => showSettings(),
+              ),
             ),
           ],
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:notes/blocs/user/user_cubit.dart';
+import 'package:notes/cubits/user/user_cubit.dart';
 
 class GoogleSignInButton extends StatelessWidget {
   @override
