@@ -1,7 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes/services/shared_preferences.dart';
-
-import 'notebook/notebook_state.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override

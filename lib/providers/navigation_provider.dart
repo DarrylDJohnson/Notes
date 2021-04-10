@@ -48,8 +48,9 @@ class _NavigationProviderState extends State<NavigationProvider> {
             return NotebookProvider(state.notebook);
           } else if (state is NavigationStateNote) {
             return NoteProvider(state.notebook, state.note);
+          } else {
+            return SplashScreen();
           }
-          throw () {};
         },
         buildWhen: (previous, current) =>
             current is NavigationStateSplash ||

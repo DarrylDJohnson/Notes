@@ -28,6 +28,7 @@ class UserCubit extends Cubit<UserState> {
         }
       });
     } catch (error) {
+      addError(error);
       emit(UserStateError(error));
     }
   }
@@ -38,6 +39,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       await userRepository.signInWithGoogle();
     } catch (error) {
+      addError(error);
       emit(UserStateError(error));
     }
   }
@@ -48,6 +50,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       await userRepository.signOutWithGoogle();
     } catch (error) {
+      addError(error);
       emit(UserStateError(error));
     }
   }

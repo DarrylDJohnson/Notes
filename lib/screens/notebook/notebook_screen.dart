@@ -42,14 +42,13 @@ class NotebookScreen extends StatelessWidget {
                     }
                   },
                   builder: (context, state) {
-                    if (state is NotebookStateLoading) {
-                      return LoadingPage();
-                    } else if (state is NotebookStateSuccess) {
+                    if (state is NotebookStateSuccess) {
                       return state.notes.isEmpty
                           ? EmptyPage()
                           : NotesPage(notebook, state.notes);
+                    } else {
+                      return LoadingPage();
                     }
-                    throw (() {});
                   },
                   buildWhen: (previousState, currentState) =>
                       currentState is NotebookStateLoading ||

@@ -25,7 +25,6 @@ class NoteScreen extends StatelessWidget {
       },
       child: SafeArea(
         child: Scaffold(
-          resizeToAvoidBottomPadding: true,
           resizeToAvoidBottomInset: true,
           appBar: AppBar(
             backgroundColor: Colors.white,

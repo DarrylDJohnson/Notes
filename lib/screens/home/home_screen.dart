@@ -40,11 +40,9 @@ class HomeScreen extends StatelessWidget {
                   return state.notebooks.isEmpty
                       ? EmptyPage()
                       : NotebooksPage(state.notebooks);
-                } else if (state is HomeStateLoading) {
+                } else {
                   return LoadingPage();
                 }
-
-                throw () {};
               },
               buildWhen: (previous, current) =>
                   current is HomeStateLoading || current is HomeStateSuccess,

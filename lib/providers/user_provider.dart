@@ -37,11 +37,9 @@ class _UserProviderState extends State<UserProvider> {
             return SplashScreen();
           } else if (state is UserStateAuthenticated) {
             return NavigationProvider();
-          } else if (state is UserStateUnauthenticated) {
+          } else {
             return SignInScreen();
           }
-
-          throw () {};
         },
         buildWhen: (previous, current) =>
             current is UserStateInitial ||

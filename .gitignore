@@ -47,3 +47,4 @@ app.*.map.json
 
 #sign in key#
 android/key.properties
+!.idea/
